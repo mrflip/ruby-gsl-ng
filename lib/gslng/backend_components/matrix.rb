@@ -57,6 +57,8 @@ module GSLng
     attach_function :gsl_matrix_submatrix2, [ :pointer, :size_t, :size_t, :size_t, :size_t ], :pointer
     attach_function :gsl_matrix_row_view, [ :pointer, :size_t, :size_t, :size_t ], :pointer
     attach_function :gsl_matrix_column_view, [ :pointer, :size_t, :size_t, :size_t ], :pointer
+    attach_function :gsl_matrix_view_get_matrix, [ :pointer ], :pointer
+    attach_function :gsl_matrix_view_free, [ :pointer ], :void
 
     # slide
     attach_function :gsl_matrix_slide, [ :pointer, :ssize_t, :ssize_t ], :void

@@ -243,6 +243,17 @@ module GSLng
       #@backend.gsl_vector_set(@ptr, (index < 0 ? @size + index : index), value.to_f)
     end
 
+    # Set all values to v
+    def all!(v); @backend.gsl_vector_set_all(@ptr, v); return self end
+    alias_method :set!, :all!
+    alias_method :fill!, :all!
+
+    # Set all values to zero
+    def zero!; @backend.gsl_vector_set_zero(@ptr); return self end
+
+    # Set all values to zero, except the i-th element, which is set to 1
+    def basis!(i); @backend.gsl_vector_set_basis(@ptr, i); return self end
+    
     # @group Views
 
     # Create a {Vector::View} from this Vector.
@@ -256,25 +267,13 @@ module GSLng
         size = k + (m == 0 ? 0 : 1)
       end
 
-      if (stride == 1) then ptr = @backend.gsl_vector_subvector2(@ptr, offset, size)
-      else ptr = @backend.gsl_vector_subvector_with_stride2(@ptr, offset, stride, size) end
-      View.new(ptr, self, size, stride)
+      view_ptr = @backend.gsl_vector_subvector2(@ptr, offset, stride, size)
+      View.new(self, view_ptr, size, stride)
     end
     alias_method :subvector_view, :view
 
     # Shorthand for #subvector_view(..).to_vector.
-    def subvector(*args); subvector_view(*args).to_vector end
-
-    # Set all values to v
-    def all!(v); @backend.gsl_vector_set_all(@ptr, v); return self end
-    alias_method :set!, :all!
-    alias_method :fill!, :all!
-
-    # Set all values to zero
-    def zero!; @backend.gsl_vector_set_zero(@ptr); return self end
-
-    # Set all values to zero, except the i-th element, which is set to 1
-    def basis!(i); @backend.gsl_vector_set_basis(@ptr, i); return self end
+    def subvector(*args); subvector_view(*args).to_vector end    
 
     # @group 2D/3D/4D utility vectors
 

@@ -6,19 +6,22 @@ module GSLng
     # having to copy it entirely. You can treat a View just like a Vector.
     # But note that modifying elements of a View will modify the elements of the original Vector/Matrix.
     #
+    # Note also that Views are not meant to be created explicitly, but through methods of the Vector/Matrix classes
+    #
     class View < Vector
       # @return [Vector,Matrix] The owner of the data this view accesses
       attr_reader :owner 
-
-      def initialize(ptr, owner, size, stride = 1) # @private
+      
+      def initialize(owner, view_ptr, size, stride)
         @backend = GSLng.backend
         @owner,@size,@stride = owner,size,stride
-        @ptr = FFI::AutoPointer.new(ptr, View.method(:release))
+        @view_ptr = FFI::AutoPointer.new(view_ptr, View.method(:release))
+        @ptr = GSLng.backend.gsl_vector_view_get_vector(@view_ptr)
         @ptr_value = @ptr.to_i
       end
 
       def View.release(ptr)
-        GSLng.backend.gsl_vector_free(ptr)
+        GSLng.backend.gsl_vector_view_free(ptr)
       end
       
       # Returns a Vector (*NOT* a View) copied from this view. In other words,

@@ -16,12 +16,13 @@ module GSLng
 
         @backend = GSLng.backend
         ptr = GSLng.backend::gsl_matrix_submatrix2(owner.ptr, x, y, m, n)
-        @ptr = FFI::AutoPointer.new(ptr, View.method(:release))
+        @view_ptr = FFI::AutoPointer.new(ptr, View.method(:release))
+        @ptr = GSLng.backend::gsl_matrix_view_get_matrix(@view_ptr)
         @ptr_value = @ptr.to_i
       end
 
       def View.release(ptr)
-        GSLng.backend.gsl_matrix_free(ptr)
+        GSLng.backend.gsl_matrix_view_free(ptr)
       end
 
       # Returns a Matrix (*NOT* a View) copied from this view. In other words,
