@@ -15,7 +15,7 @@ module GSLng
     include Enumerable
         
     attr_reader :size, :stride
-    attr_reader :ptr  # @private
+    attr_reader :ptr  # Internal FFI::Pointer that wraps the internal gsl_vector*
     attr_reader :ptr_value # @private
 
     # @group Constructors
@@ -512,9 +512,14 @@ module GSLng
       @backend.gsl_vector_to_a(@ptr_value)
     end
     
-    def as_array # @private
+    # Exposes underlying double* pointer, as a FFI::Pointer object, which can be passed to other
+    # libraries which use FFI. If you use a C Ruby extension, you can convert this using #to_i to a
+    # number which can be casted to a pointer in C.
+    # @return [FFI::Pointer]
+    def as_array
       @backend.gsl_vector_as_array(@ptr)
     end
+    alias_method :data_ptr, :as_array
 
     # Create a row matrix from this vector
     # @return [Matrix]

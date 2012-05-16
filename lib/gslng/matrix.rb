@@ -9,7 +9,7 @@ module GSLng
   # * The {#[]} and {#[]=} operators can handle a "wildcard" value for any dimension, just like MATLAB's colon (:).
   class Matrix
     attr_reader :m, :n    
-    attr_reader :ptr # @private
+    attr_reader :ptr # internal FFI::Pointer that wraps the underlying gsl_matrix*
     attr_reader :ptr_value # @private
 
     alias_method :height, :m
