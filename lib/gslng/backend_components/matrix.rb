@@ -1,5 +1,16 @@
 module GSLng
+
+  class GSLmatrix < FFI::Struct
+    layout :size1, :size_t,
+      :size2, :size_t,
+      :tda, :size_t,
+      :data, :pointer,
+      :block, :pointer,
+      :owner, :int
+  end
+
   backend.instance_eval do
+
     # memory handling
     attach_function :gsl_matrix_alloc, [ :size_t, :size_t ], :pointer
     attach_function :gsl_matrix_calloc, [ :size_t, :size_t ], :pointer

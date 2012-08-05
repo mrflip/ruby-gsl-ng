@@ -4,7 +4,10 @@
 
 == DESCRIPTION:
 
+* Note: This fork has a fix to a memory leak.  Making a separate gem until that's pulled to the master repo.
+
 New-generation Ruby/GSL wrapper.
+
 
 == LICENSE:
 

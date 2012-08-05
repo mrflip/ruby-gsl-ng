@@ -1,4 +1,7 @@
 # -*- ruby -*-
+require "bundler/gem_tasks"
+
+__END__
 require 'rubygems'
 require 'rake'
 require 'echoe'

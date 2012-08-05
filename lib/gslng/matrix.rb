@@ -515,5 +515,14 @@ module GSLng
       
       return true
     end
+
+    # @group FFI
+
+    # Returns the FFI::Pointer to the underlying C data memory; can be used to
+    # pass the data directly to/from other FFI libraries, without needing
+    # to go through Ruby conversion
+    def data_ptr
+      GSLmatrix.new(ptr)[:data]
+    end
   end
 end

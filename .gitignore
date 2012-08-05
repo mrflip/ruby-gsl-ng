@@ -5,7 +5,6 @@ ext/mkmf.log
 doc
 .yardoc
 pkg
-*.gemspec
 lib/*.so
 *~
 *.swp
