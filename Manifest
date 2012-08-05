@@ -9,6 +9,7 @@ lib/core_extensions/array.rb
 lib/gslng.rb
 lib/gslng/backend.rb
 lib/gslng/backend_components/error_handling.rb
+lib/gslng/backend_components/fit.rb
 lib/gslng/backend_components/matrix.rb
 lib/gslng/backend_components/rng.rb
 lib/gslng/backend_components/special.rb

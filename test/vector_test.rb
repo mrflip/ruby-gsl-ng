@@ -60,6 +60,11 @@ class VectorTest < Test::Unit::TestCase
   def test_stats
     assert_equal(Vector[1, 2, 3, 4, 5].median, 3)
     assert_equal(Vector[1, 2, 3, 4].median, 2.5)
+    assert_equal([1, 2, 3, 4].to_v.correlation([1, 2, 3, 4].to_v), 1)
+  end
+  
+  def test_regression
+    assert_equal([1, 2, 3, 4].to_v.fit_linear([2, 3, 4, 5].to_v), [1.0, 1.0])
   end
 
 	def test_sets

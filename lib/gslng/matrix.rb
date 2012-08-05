@@ -415,9 +415,23 @@ module GSLng
     # @yield [vector_view]    
     def each_vec_row; self.rows.times {|i| yield(row_vecview(i))} end
 
+    # Returns an array of vector views representing rows
+    def row_vectors
+      vectors = []
+      each_vec_row {|c| vectors.push c}
+      return vectors
+    end
+
     # Same as #each_column, but yields {Vector::View}'s
     # @yield [vector_view]    
     def each_vec_column; self.columns.times {|i| yield(column_vecview(i))} end
+
+    # Returns an array of vector views representing columns
+    def column_vectors
+      vectors = []
+      each_vec_column {|c| vectors.push c}
+      return vectors
+    end
 
     # Yields the block for each column *view* ({Matrix::View}).
     # @yield [view]    

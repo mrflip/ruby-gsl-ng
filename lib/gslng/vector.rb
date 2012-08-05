@@ -430,7 +430,22 @@ module GSLng
 
     # Compute the correlation between self and other
     def correlation(other)
-      @backend.gsl_stats_correlation(self.as_array, self.stride, other.as_array, other.stride, self.size)
+      @backend.gsl_stats_correlation(self.as_array, self.stride, other.as_array, other.stride, self.size).round(15)
+    end
+    
+    #
+    def fit_linear(other)
+    
+      c0 = FFI::Buffer.new(:double)
+      c1 = FFI::Buffer.new(:double)
+      
+      cov00 = FFI::Buffer.new(:double)
+      cov01 = FFI::Buffer.new(:double)
+      cov11 = FFI::Buffer.new(:double)
+      sumsq = FFI::Buffer.new(:double)
+      
+      @backend.gsl_fit_linear(self.as_array, self.stride, other.as_array, other.stride, self.size, c0, c1, cov00, cov01, cov11, sumsq)
+      return [c0[0].get_float64(0), c1[0].get_float64(0)]
     end
 
     # @group High-order methods

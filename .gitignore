@@ -5,7 +5,10 @@ ext/mkmf.log
 doc
 .yardoc
 pkg
+*.gem
 lib/*.so
+ext/*.bundle
+lib/*.bundle
 *~
 *.swp
 *.swo
